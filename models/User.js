@@ -5,13 +5,37 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   name: { type: String, required: true, trim: true },
-  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-  handle: { type: String, required: true, unique: true, lowercase: true, trim: true },
+
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+    index: true,
+  },
+
+  handle: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+    index: true,
+  },
+
   password: { type: String, required: true, minlength: 6, select: false },
+
   role: { type: String, enum: ['user', 'subadmin', 'admin'], default: 'user', index: true },
+
   isActive: { type: Boolean, default: true },
 
-  // NEW: follow & like helpers
+  // 🔐 Email verification
+  isVerified: { type: Boolean, default: false, index: true },
+  verificationTokenHash: { type: String, select: false },
+  verificationTokenExpires: { type: Date, select: false },
+
+  // 🔁 follow & like helpers
   followingPoets: [{ type: Schema.Types.ObjectId, ref: 'Poet' }],
   likedWritings: [{ type: Schema.Types.ObjectId, ref: 'Writing' }],
 }, { timestamps: true });

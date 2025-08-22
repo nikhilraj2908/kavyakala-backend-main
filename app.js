@@ -15,7 +15,8 @@ app.use(cors({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api', authRoutes);
+// app.use('/api', authRoutes);
+ app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/poets', poetRoutes);
 app.use('/api/writings', writingRoutes);
